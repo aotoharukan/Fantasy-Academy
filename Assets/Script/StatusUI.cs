@@ -3,8 +3,16 @@ using TMPro;              // TextMeshProのテキスト操作用（外部UIラ�
 
 public class StatusUI : MonoBehaviour // Cでいう「struct + 関数群」をまとめたもの
 {
-    public PlayerStatus player;             // プレイヤーのステータス参照（構造体っぽい役割）
+    public PlayerStatus player;          // プレイヤーのステータス参照（構造体っぽい役割
     
+    public Text hpText;
+    public Text strText;
+    public Text defText;
+    public Text intelText;
+    public Text lukText;
+    public Text mpText;
+    public Text turnText;
+
     // HP表示用テキスト
     public TextMeshProUGUI hpText;
 
@@ -18,6 +26,7 @@ public class StatusUI : MonoBehaviour // Cでいう「struct + 関数群」を�
     {
         hpText.text = "HP: " + player.hp.ToString();
     }
+
 
     //str表示用テキスト
     public TextMeshProUGUI strText;         // STR表示用のUIテキスト（ポインタに近い）
@@ -42,6 +51,7 @@ public class StatusUI : MonoBehaviour // Cでいう「struct + 関数群」を�
         strText.text = "STR: " + player.str.ToString(); // 数値→文字列変換（Cなら sprintf）
     }
 
+
     // DEF（防御力）表示
     public TextMeshProUGUI defText;
 
@@ -55,6 +65,7 @@ public class StatusUI : MonoBehaviour // Cでいう「struct + 関数群」を�
     {
         defText.text = "DEF: " + player.def.ToString();
     }
+
 
     // INTEL（知力）表示
     public TextMeshProUGUI intelText;
@@ -70,6 +81,23 @@ public class StatusUI : MonoBehaviour // Cでいう「struct + 関数群」を�
         intelText.text = "INTEL: " + player.intel.ToString();
     }
 
+
+
+    // MP表示
+    public TextMeshProUGUI mpText;
+
+    public void OnMpUpButtonClicked()
+    {
+        player.mp += 1;
+        UpdateMpText();
+    }
+
+    void UpdateMpText()
+    {
+        mpText.text = "MP: " + player.mp.ToString();
+    }
+
+
     // LUK（運）表示
     public TextMeshProUGUI lukText;
 
@@ -84,4 +112,19 @@ public class StatusUI : MonoBehaviour // Cでいう「struct + 関数群」を�
         lukText.text = "LUK: " + player.luk.ToString();
     }
 
+
+
+    public TextMeshProUGUI turnText;
+
+    public void UpdateStatus(int hp, int str, int def, int intel, int luk, int turnsLeft)
+    {
+        if (hpText != null) hpText.text = "HP: " + player.hp.ToString();
+        if (strText != null) strText.text = "STR: " + player.str.ToString();
+        if (defText != null) defText.text = "DEF: " + player.def.ToString();
+        if (intelText != null) intelText.text = "INTEL: " + player.intel.ToString();
+        if (lukText != null) lukText.text = "LUK: " + player.luk.ToString();
+        if (mpText != null) mpText.text = "MP: " + player.mp.ToString();
+        if (turnText != null) turnText.text = "残りターン: " + turnsLeft.ToString();
+    }
 }
+

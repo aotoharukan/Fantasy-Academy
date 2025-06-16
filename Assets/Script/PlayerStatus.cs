@@ -11,31 +11,63 @@ public class PlayerStatus : MonoBehaviour
     public int turnsLeft = 12;
 
     public StatusUI statusUI;
-
-    public void DoMagicTraining()
+    
+    public enum TrainingType { Power, Magic, Defence }
+    public void DoTraining(TrainingType type)
     {
         if (turnsLeft <= 0)
         {
-            Debug.Log("もうターンがありません！");
+            Debug.Log("ターン切れ！");
             return;
         }
 
-        int intelup = Random.Range(10, 21);
-        int mpup = Random.Range(10, 16);
+        int hpup = 0;   // ✅ 必ず初期化！
+        int mpup = 0;
+        int strup = 0;
+        int defup = 0;
+        int intelup = 0;
+        int lukup = 0;
 
-        intel += intelup;
-        mp += mpup;
+        switch (type)
+        {
+            case TrainingType.Magic:
+                int intelup = Random.Range(10, 21);
+                int mpup = Random.Range(10, 16);
+                intel += intelup;
+                mp += mpup;
+
+                Debug.Log("魔力トレーニング実行！: INTEL+ " + intelup + "MP+ " + mpup + "、残りターン: " + turnsLeft);
+                break;
+
+            case TrainingType.Power:
+                int hpup = Random.Range(25, 51);
+                int strup = Random.Range(10, 21);
+                hp += hpup;
+                str += strup;
+
+                Debug.Log("パワートレーニング実行！: HP+ " + hpup + "STR+ " + strup + "、残りターン: " + turnsLeft);
+                break;
+
+            case TrainingType.Defence:
+                int hp = Random.Range(25, 51);
+                int def = Random.Range(10, 21);
+                hp += hpup;
+                def += defup;
+
+                Debug.Log("パワートレーニング実行！: HP+ " + hpup + "STR+ " + defup + "、残りターン: " + turnsLeft);
+                break;
+        }
+
         turnsLeft--;
-
-        Debug.Log("魔力トレーニング実行！: INTEL+ " + intelup + "MP+ " + mpup + "、残りターン" + turnsLeft);
-
-        // UI更新
         if (statusUI != null)
         {
-            statusUI.UpdateStatus(intel, mp, turnsLeft);
+            statusUI.UpdateALLStatusUI();   // ← UIをまとめて更新！
         }
-    }   
 
+         Debug.Log($"トレーニング完了：INTEL+{intelup} MP+{mpup} STR+{strup} HP+{hpup} DEF+{defup} LUK+{lukup} 残ターン:{turnsLeft}");
+
+    }   
+    
 }
 
 

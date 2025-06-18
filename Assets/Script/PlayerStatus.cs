@@ -31,8 +31,8 @@ public class PlayerStatus : MonoBehaviour
         switch (type)
         {
             case TrainingType.Magic:
-                int intelup = Random.Range(10, 21);
-                int mpup = Random.Range(10, 16);
+                intelup = Random.Range(10, 21);
+                mpup = Random.Range(10, 16);
                 intel += intelup;
                 mp += mpup;
 
@@ -40,8 +40,8 @@ public class PlayerStatus : MonoBehaviour
                 break;
 
             case TrainingType.Power:
-                int hpup = Random.Range(25, 51);
-                int strup = Random.Range(10, 21);
+                hpup = Random.Range(25, 51);
+                strup = Random.Range(10, 21);
                 hp += hpup;
                 str += strup;
 
@@ -49,12 +49,12 @@ public class PlayerStatus : MonoBehaviour
                 break;
 
             case TrainingType.Defence:
-                int hp = Random.Range(25, 51);
-                int def = Random.Range(10, 21);
+                hpup = Random.Range(25, 51);
+                defup = Random.Range(10, 21);
                 hp += hpup;
                 def += defup;
 
-                Debug.Log("パワートレーニング実行！: HP+ " + hpup + "STR+ " + defup + "、残りターン: " + turnsLeft);
+                Debug.Log("ディフェンストレーニング実行！: HP+ " + hpup + "STR+ " + defup + "、残りターン: " + turnsLeft);
                 break;
         }
 

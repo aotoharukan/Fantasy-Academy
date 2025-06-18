@@ -29,7 +29,7 @@ public class StatusUI : MonoBehaviour
         lukText.text = "LUK: " + player.luk.ToString();
         turnText.text = "残りターン: " + player.turnsLeft.ToString();
     }
-    
+
 
     public enum StatusType { HP, MP, STR, DEF, INTEL, Luk }
     public void OnStausUp(StatusType type, int amount)
@@ -44,24 +44,24 @@ public class StatusUI : MonoBehaviour
             case StatusType.Luk: player.luk += amount; break;
         }
 
-        UpdateALLStatusUI(type);
+        UpdateALLStatusUI();
     }
 
 
     //各トレーニング実行項目
     public void OnMagicTrainingClicked()
     {
-        player.DoTraining(TrainingType.MAGIC);
+        player.DoTraining(PlayerStatus.TrainingType.Magic);
     }
 
     public void OnPowerTrainingClicked()
-    {   
-        player.DoTraining(TrainingType.Power);
+    {
+        player.DoTraining(PlayerStatus.TrainingType.Power);
     }
 
     public void OnDefenseTrainingClicked()
     {
-        player.DoTraining(TrainingType.DEFENSE);
+        player.DoTraining(PlayerStatus.TrainingType.Defence);
     }
 
     public void finish(int turnsLeft)

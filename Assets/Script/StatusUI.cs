@@ -15,12 +15,39 @@ public class StatusUI : MonoBehaviour
 
     void Start()
     {
-        // 初期表示
+        Debug.Log("Start()は実行された");
+
+        if (player == null)
+        {
+            Debug.LogWarning("PlayerStatusがセットされていません！");
+            return;
+        }
+
+        if (hpText == null) Debug.LogWarning("hpText が null");
+        if (mpText == null) Debug.LogWarning("mpText が null");
+        if (strText == null) Debug.LogWarning("strText が null");
+        if (defText == null) Debug.LogWarning("defText が null");
+        if (intelText == null) Debug.LogWarning("intelText が null");
+        if (lukText == null) Debug.LogWarning("lukText が null");
+        if (turnText == null) Debug.LogWarning("turnText が null");
+
+
+        if (hpText == null || mpText == null || strText == null || defText == null ||
+            intelText == null || lukText == null || turnText == null)
+        {
+            Debug.LogWarning("Text系UIがセットされていません！");
+            return;
+        }
+
         UpdateALLStatusUI();
     }
 
+
     public void UpdateALLStatusUI()
     {
+        Debug.Log("UpdateALLStatusUI呼ばれた！");
+        Debug.Log($"HP: {player.hp}, MP: {player.mp}, STR: {player.str}, INTEL: {player.intel}");
+
         hpText.text = "HP: " + player.hp.ToString();
         mpText.text = "MP: " + player.mp.ToString();
         strText.text = "STR: " + player.str.ToString();
@@ -29,6 +56,7 @@ public class StatusUI : MonoBehaviour
         lukText.text = "LUK: " + player.luk.ToString();
         turnText.text = "残りターン: " + player.turnsLeft.ToString();
     }
+
 
 
     public enum StatusType { HP, MP, STR, DEF, INTEL, Luk }
@@ -73,4 +101,16 @@ public class StatusUI : MonoBehaviour
             turnText.text = "残りターン: " + turnsLeft.ToString();
         }
     }
+
+    //ユーザーに分かりやすくステータス上昇結果を表示する「フィードバックエリア」
+    public TextMeshProUGUI logText; // // ← ステータスログ表示用
+
+    public void ShowLog(string message)
+    {
+        if (logText != null)
+        {
+            logText.text = message;
+        }
+    }
+
 }

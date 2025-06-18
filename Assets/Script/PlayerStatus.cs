@@ -11,17 +11,30 @@ public class PlayerStatus : MonoBehaviour
     public int turnsLeft = 12;
 
     public StatusUI statusUI;
+
+    void Start()
+    {
+        if (statusUI == null)
+        {
+            statusUI = FindFirstObjectByType<StatusUI>();  // Unity 2023以降推奨
+            Debug.Log("StatusUI 自動取得しました！");
+        }
+    }
+
     
     public enum TrainingType { Power, Magic, Defence }
     public void DoTraining(TrainingType type)
     {
+        Debug.Log($"このPlayerStatusのインスタンスID: {this.GetInstanceID()}");
+        Debug.Log($"StatusUIが参照してるplayerのID: {statusUI.player.GetInstanceID()}");
+
         if (turnsLeft <= 0)
         {
             Debug.Log("ターン切れ！");
             return;
         }
 
-        int hpup = 0;   // ✅ 必ず初期化！
+        int hpup = 0;
         int mpup = 0;
         int strup = 0;
         int defup = 0;
@@ -33,10 +46,10 @@ public class PlayerStatus : MonoBehaviour
             case TrainingType.Magic:
                 intelup = Random.Range(10, 21);
                 mpup = Random.Range(10, 16);
+                Debug.Log($"元のINTEL: {intel}, 元のMP: {mp}");
                 intel += intelup;
                 mp += mpup;
-
-                Debug.Log("魔力トレーニング実行！: INTEL+ " + intelup + "MP+ " + mpup + "、残りターン: " + turnsLeft);
+                Debug.Log($"加算後のINTEL: {intel}, MP: {mp}");
                 break;
 
             case TrainingType.Power:
@@ -44,8 +57,6 @@ public class PlayerStatus : MonoBehaviour
                 strup = Random.Range(10, 21);
                 hp += hpup;
                 str += strup;
-
-                Debug.Log("パワートレーニング実行！: HP+ " + hpup + "STR+ " + strup + "、残りターン: " + turnsLeft);
                 break;
 
             case TrainingType.Defence:
@@ -53,20 +64,27 @@ public class PlayerStatus : MonoBehaviour
                 defup = Random.Range(10, 21);
                 hp += hpup;
                 def += defup;
-
-                Debug.Log("ディフェンストレーニング実行！: HP+ " + hpup + "STR+ " + defup + "、残りターン: " + turnsLeft);
                 break;
         }
 
         turnsLeft--;
-        if (statusUI != null)
-        {
-            statusUI.UpdateALLStatusUI();   // ← UIをまとめて更新！
-        }
+            if (statusUI != null)
+            {
+                statusUI.UpdateALLStatusUI();   // ← UIをまとめて更新！
+            }
 
-         Debug.Log($"トレーニング完了：INTEL+{intelup} MP+{mpup} STR+{strup} HP+{hpup} DEF+{defup} LUK+{lukup} 残ターン:{turnsLeft}");
+            Debug.Log($"トレーニング完了：INTEL+{intelup} MP+{mpup} STR+{strup} HP+{hpup} DEF+{defup} LUK+{lukup} 残ターン:{turnsLeft}");
+            
+            if (statusUI != null)
+            {
+                statusUI.UpdateALLStatusUI();
 
-    }   
+                string result = $"INTEl + {intelup} MP + {mpup} STR + {strup} DEF + {defup} LUK + {lukup}";
+                statusUI.ShowLog(result);
+
+            }
+
+        }   
     
 }
 

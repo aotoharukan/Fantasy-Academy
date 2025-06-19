@@ -1,4 +1,4 @@
-name: Unity Build (Personal License)
+name: Unity Build (Personal License - 2022 LTS)
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Build Unity Project without Manual Activation
+    name: Build Unity Project (2022 LTS)
     runs-on: ubuntu-latest
 
     steps:
@@ -16,10 +16,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build with Unity
-        uses: webbertakken/unity-builder@v2.0-alpha-6  # ✅ fork版を使用
+        uses: webbertakken/unity-builder@v2.0-alpha-6
         with:
-          unityVersion: 6000.0.46f1                    # ✅ 晴希くんのUnityバージョン
-          targetPlatform: StandaloneWindows64         # ✅ PC用ビルド
+          unityVersion: 2022.3.15f1  # ✅ 一時的に安定LTSバージョンに切り替え
+          targetPlatform: StandaloneWindows64
         env:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}

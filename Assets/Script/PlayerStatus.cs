@@ -3,11 +3,12 @@ using UnityEngine;
 public class PlayerStatus : MonoBehaviour
 {
     public int hp = 100;
+    public int mp = 0;
+    public int sta = 0;
     public int str = 20;
     public int def = 10;
     public int intel = 20;
     public int luk = 5;
-    public int mp = 0;
     public int turnsLeft = 12;
 
     public StatusUI statusUI;
@@ -22,7 +23,7 @@ public class PlayerStatus : MonoBehaviour
     }
 
     
-    public enum TrainingType { Power, Magic, Defence }
+    public enum TrainingType { Taf, Power, Fig, Defence, Magic, Ment}
     public void DoTraining(TrainingType type)
     {
         Debug.Log($"このPlayerStatusのインスタンスID: {this.GetInstanceID()}");

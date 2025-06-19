@@ -7,7 +7,7 @@ public class StatusUI : MonoBehaviour
 
     public TextMeshProUGUI hpText;
     public TextMeshProUGUI mpText;
-    public TextmeshProUGUI staText;
+    public TextMeshProUGUI staText;
     public TextMeshProUGUI strText;
     public TextMeshProUGUI defText;
     public TextMeshProUGUI intelText;

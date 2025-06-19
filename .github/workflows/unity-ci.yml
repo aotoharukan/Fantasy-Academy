@@ -1,4 +1,4 @@
-name: Unity Build (No License)
+name: Unity Build (Personal License)
 
 on:
   push:
@@ -8,19 +8,18 @@ on:
 
 jobs:
   build:
-    name: Unity Build without Manual License
+    name: Build Unity Project without Manual Activation
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Unity
-        uses: game-ci/unity-builder@main  # ✅ 最新版指定！
+      - name: Build with Unity
+        uses: webbertakken/unity-builder@v2.0-alpha-6  # ✅ fork版を使用
         with:
-          unityVersion: 6000.0.46f1
-          targetPlatform: StandaloneWindows64
-          activateLicense: false  # ✅ 明示的に無効化
+          unityVersion: 6000.0.46f1                    # ✅ 晴希くんのUnityバージョン
+          targetPlatform: StandaloneWindows64         # ✅ PC用ビルド
         env:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}

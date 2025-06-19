@@ -36,6 +36,7 @@ public class PlayerStatus : MonoBehaviour
 
         int hpup = 0;  //必ず初期化！
         int mpup = 0;
+        int staup = 0;
         int strup = 0;
         int defup = 0;
         int intelup = 0;
@@ -44,8 +45,8 @@ public class PlayerStatus : MonoBehaviour
         switch (type)
         {
             case TrainingType.Magic:
-                intelup = Random.Range(10, 21);
-                mpup = Random.Range(10, 16);
+                intelup = Random.Range(10, 26);
+                mpup = Random.Range(5, 11);
                 Debug.Log($"元のINTEL: {intel}, 元のMP: {mp}");
                 intel += intelup;
                 mp += mpup;
@@ -53,8 +54,8 @@ public class PlayerStatus : MonoBehaviour
                 break;
 
             case TrainingType.Power:
-                hpup = Random.Range(25, 51);
                 strup = Random.Range(10, 21);
+                staup = Random.Range(5, 11);
                 hp += hpup;
                 str += strup;
                 break;
@@ -73,13 +74,13 @@ public class PlayerStatus : MonoBehaviour
                 statusUI.UpdateALLStatusUI();   // ← UIをまとめて更新！
             }
 
-            Debug.Log($"トレーニング完了：INTEL+{intelup} MP+{mpup} STR+{strup} HP+{hpup} DEF+{defup} LUK+{lukup} 残ターン:{turnsLeft}");
+            Debug.Log($"トレーニング完了：HP+{hpup} MP+{mpup} STA+{staup} STR+{strup} DEF+{defup} INTEL+{intelup} LUK+{lukup} 残ターン:{turnsLeft}");
             
             if (statusUI != null)
             {
                 statusUI.UpdateALLStatusUI();
 
-                string result = $"INTEl + {intelup} MP + {mpup} STR + {strup} DEF + {defup} LUK + {lukup}";
+                string result = $"HP+{hpup} MP+{mpup} STA+{staup} STR+{strup} DEF+{defup} INTEL+{intelup} LUK+{lukup}";
                 statusUI.ShowLog(result);
 
             }

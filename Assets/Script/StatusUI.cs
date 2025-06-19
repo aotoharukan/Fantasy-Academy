@@ -6,11 +6,12 @@ public class StatusUI : MonoBehaviour
     public PlayerStatus player;  // Playerのステータスを参照
 
     public TextMeshProUGUI hpText;
+    public TextMeshProUGUI mpText;
+    public TextmeshProUGUI staText;
     public TextMeshProUGUI strText;
     public TextMeshProUGUI defText;
     public TextMeshProUGUI intelText;
     public TextMeshProUGUI lukText;
-    public TextMeshProUGUI mpText;
     public TextMeshProUGUI turnText;
 
     void Start()
@@ -25,6 +26,7 @@ public class StatusUI : MonoBehaviour
 
         if (hpText == null) Debug.LogWarning("hpText が null");
         if (mpText == null) Debug.LogWarning("mpText が null");
+        if (staText == null) Debug.LogWarning("staText が null");
         if (strText == null) Debug.LogWarning("strText が null");
         if (defText == null) Debug.LogWarning("defText が null");
         if (intelText == null) Debug.LogWarning("intelText が null");
@@ -32,7 +34,7 @@ public class StatusUI : MonoBehaviour
         if (turnText == null) Debug.LogWarning("turnText が null");
 
 
-        if (hpText == null || mpText == null || strText == null || defText == null ||
+        if (hpText == null || mpText == null || staText == null || strText == null || defText == null ||
             intelText == null || lukText == null || turnText == null)
         {
             Debug.LogWarning("Text系UIがセットされていません！");
@@ -50,6 +52,7 @@ public class StatusUI : MonoBehaviour
 
         hpText.text = "HP: " + player.hp.ToString();
         mpText.text = "MP: " + player.mp.ToString();
+        staText.text = "STA" + player.sta.ToString();
         strText.text = "STR: " + player.str.ToString();
         defText.text = "DEF: " + player.def.ToString();
         intelText.text = "INTEL: " + player.intel.ToString();
@@ -59,13 +62,14 @@ public class StatusUI : MonoBehaviour
 
 
 
-    public enum StatusType { HP, MP, STR, DEF, INTEL, Luk }
+    public enum StatusType { HP, MP, STA, STR, DEF, INTEL, Luk }
     public void OnStausUp(StatusType type, int amount)
     {
         switch (type)
         {
             case StatusType.HP: player.hp += amount; break;
             case StatusType.MP: player.mp += amount; break;
+            case StatusType.STA: player.sta += amount; break;
             case StatusType.STR: player.str += amount; break;
             case StatusType.DEF: player.def += amount; break;
             case StatusType.INTEL: player.intel += amount; break;

@@ -1,4 +1,4 @@
-name: Unity Build (Personal License - 2022 LTS)
+name: Unity Build (Personal License - Verified Tag)
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Build Unity Project (2022 LTS)
+    name: Build Unity Project (2022.3.10f1)
     runs-on: ubuntu-latest
 
     steps:
@@ -18,7 +18,7 @@ jobs:
       - name: Build with Unity
         uses: webbertakken/unity-builder@v2.0-alpha-6
         with:
-          unityVersion: 2022.3.15f1  # ✅ 一時的に安定LTSバージョンに切り替え
+          unityVersion: 2022.3.10f1  # ✅ 確実に存在するDockerタグ
           targetPlatform: StandaloneWindows64
         env:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}

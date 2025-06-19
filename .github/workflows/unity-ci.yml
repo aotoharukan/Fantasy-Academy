@@ -8,27 +8,19 @@ on:
 
 jobs:
   build:
-    name: Build Unity Project (No License)
+    name: Unity Build without Manual License
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Cache Library
-        uses: actions/cache@v3
-        with:
-          path: Library
-          key: Library-${{ runner.os }}-${{ hashFiles('**/ProjectSettings/ProjectVersion.txt') }}
-          restore-keys: |
-            Library-${{ runner.os }}-
-
-      - name: Build Unity Project
-        uses: game-ci/unity-builder@v3
+      - name: Setup Unity
+        uses: game-ci/unity-builder@main  # ✅ 最新版指定！
         with:
           unityVersion: 6000.0.46f1
           targetPlatform: StandaloneWindows64
-          activateLicense: false  # ✅ ライセンス認証をスキップ
+          activateLicense: false  # ✅ 明示的に無効化
         env:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}

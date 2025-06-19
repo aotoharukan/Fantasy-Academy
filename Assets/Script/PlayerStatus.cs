@@ -44,27 +44,42 @@ public class PlayerStatus : MonoBehaviour
 
         switch (type)
         {
+            case TrainingType.Taf:
+                hpup = Random.Range(25, 51);
+                defup = Random.Range(10, 21);
+                hp += hpup;
+                def += defup;
+                break;
+
+            case TrainingType.Power:
+                strup = Random.Range(20, 31);
+                str += strup;
+                break;
+
+            case TrainingType.Fig:
+                strup = Random.Range(15, 26);
+                staup = Random.Range(1, 6);
+                hp += hpup;
+                str += strup;
+                break;
+
+            case TrainingType.Defence:
+                defup = Random.Range(20, 31);
+                def += defup;
+                break;
+
             case TrainingType.Magic:
-                intelup = Random.Range(10, 26);
-                mpup = Random.Range(5, 11);
+                intelup = Random.Range(15, 26);
+                mpup = Random.Range(1, 6);
                 Debug.Log($"元のINTEL: {intel}, 元のMP: {mp}");
                 intel += intelup;
                 mp += mpup;
                 Debug.Log($"加算後のINTEL: {intel}, MP: {mp}");
                 break;
 
-            case TrainingType.Power:
-                strup = Random.Range(10, 21);
-                staup = Random.Range(5, 11);
-                hp += hpup;
-                str += strup;
-                break;
-
-            case TrainingType.Defence:
-                hpup = Random.Range(25, 51);
-                defup = Random.Range(10, 21);
-                hp += hpup;
-                def += defup;
+            case TrainingType.Ment:
+                mpup = Random.Range(10, 16);
+                mp += mpup;
                 break;
         }
 

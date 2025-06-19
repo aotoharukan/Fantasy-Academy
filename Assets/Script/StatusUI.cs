@@ -81,19 +81,34 @@ public class StatusUI : MonoBehaviour
 
 
     //各トレーニング実行項目
-    public void OnMagicTrainingClicked()
-    {
-        player.DoTraining(PlayerStatus.TrainingType.Magic);
-    }
 
+    public void OnTafTrainingClicked()
+    {
+        player.DoTraining(PlayerStatus.TrainingType.Taf);
+    }
     public void OnPowerTrainingClicked()
     {
         player.DoTraining(PlayerStatus.TrainingType.Power);
     }
 
+    public void OnFigTrainingClicked()
+    {
+        player.DoTraining(PlayerStatus.TrainingType.Fig);
+    }
+
+    public void OnMentTrainingClicked()
+    {
+        player.DoTraining(PlayerStatus.TrainingType.Ment);
+    }
+
     public void OnDefenseTrainingClicked()
     {
         player.DoTraining(PlayerStatus.TrainingType.Defence);
+    }
+
+    public void OnMagicTrainingClicked()
+    {
+        player.DoTraining(PlayerStatus.TrainingType.Magic);
     }
 
     public void finish(int turnsLeft)

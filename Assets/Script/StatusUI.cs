@@ -1,87 +1,116 @@
-using UnityEngine;        // Unityの基本API（Cで言う標準ヘッダ）
-using TMPro;              // TextMeshProのテキスト操作用（外部UIライブラリ）
+using UnityEngine;
+using TMPro;  // TextMeshPro用
 
-public class StatusUI : MonoBehaviour // Cでいう「struct + 関数群」をまとめたもの
+public class StatusUI : MonoBehaviour
 {
-    public PlayerStatus player;             // プレイヤーのステータス参照（構造体っぽい役割）
-    
-    // HP表示用テキスト
+    public PlayerStatus player;  // Playerのステータスを参照
+
     public TextMeshProUGUI hpText;
-
-    public void OnHpUpButtonClicked()
-    {
-        player.hp += 10;  // HPは10ずつアップ
-        UpdateHpText();
-    }
-
-    void UpdateHpText()
-    {
-        hpText.text = "HP: " + player.hp.ToString();
-    }
-
-    //str表示用テキスト
-    public TextMeshProUGUI strText;         // STR表示用のUIテキスト（ポインタに近い）
-
-    void Start()                            // Unityの初期化関数（Cなら main の準備パート）
-    {
-        UpdateHpText();
-        UpdateStrText();                   // 初期表示更新（printf っぽい)
-        UpdateDefText();
-        UpdateIntelText();
-        UpdateLukText();
-    }
-
-    public void OnStrUpButtonClicked()      // ボタンクリック時に呼ばれる関数
-    {
-        player.str += 1;                    // STRを+1（変数更新）
-        UpdateStrText();                    // 表示更新（再描画）
-    }
-
-    void UpdateStrText()
-    {
-        strText.text = "STR: " + player.str.ToString(); // 数値→文字列変換（Cなら sprintf）
-    }
-
-    // DEF（防御力）表示
+    public TextMeshProUGUI strText;
     public TextMeshProUGUI defText;
-
-    public void OnDefUpButtonClicked()
-    {
-        player.def += 1;
-        UpdateDefText();
-    }
-
-    void UpdateDefText()
-    {
-        defText.text = "DEF: " + player.def.ToString();
-    }
-
-    // INTEL（知力）表示
     public TextMeshProUGUI intelText;
-
-    public void OnIntelUpButtonClicked()
-    {
-        player.intel += 1;
-        UpdateIntelText();
-    }
-
-    void UpdateIntelText()
-    {
-        intelText.text = "INTEL: " + player.intel.ToString();
-    }
-
-    // LUK（運）表示
     public TextMeshProUGUI lukText;
+    public TextMeshProUGUI mpText;
+    public TextMeshProUGUI turnText;
 
-    public void OnLukUpButtonClicked()
+    void Start()
     {
-        player.luk += 1;
-        UpdateLukText();
+        Debug.Log("Start()は実行された");
+
+        if (player == null)
+        {
+            Debug.LogWarning("PlayerStatusがセットされていません！");
+            return;
+        }
+
+        if (hpText == null) Debug.LogWarning("hpText が null");
+        if (mpText == null) Debug.LogWarning("mpText が null");
+        if (strText == null) Debug.LogWarning("strText が null");
+        if (defText == null) Debug.LogWarning("defText が null");
+        if (intelText == null) Debug.LogWarning("intelText が null");
+        if (lukText == null) Debug.LogWarning("lukText が null");
+        if (turnText == null) Debug.LogWarning("turnText が null");
+
+
+        if (hpText == null || mpText == null || strText == null || defText == null ||
+            intelText == null || lukText == null || turnText == null)
+        {
+            Debug.LogWarning("Text系UIがセットされていません！");
+            return;
+        }
+
+        UpdateALLStatusUI();
     }
 
-    void UpdateLukText()
+
+    public void UpdateALLStatusUI()
     {
+        Debug.Log("UpdateALLStatusUI呼ばれた！");
+        Debug.Log($"HP: {player.hp}, MP: {player.mp}, STR: {player.str}, INTEL: {player.intel}");
+
+        hpText.text = "HP: " + player.hp.ToString();
+        mpText.text = "MP: " + player.mp.ToString();
+        strText.text = "STR: " + player.str.ToString();
+        defText.text = "DEF: " + player.def.ToString();
+        intelText.text = "INTEL: " + player.intel.ToString();
         lukText.text = "LUK: " + player.luk.ToString();
+        turnText.text = "残りターン: " + player.turnsLeft.ToString();
+    }
+
+
+
+    public enum StatusType { HP, MP, STR, DEF, INTEL, Luk }
+    public void OnStausUp(StatusType type, int amount)
+    {
+        switch (type)
+        {
+            case StatusType.HP: player.hp += amount; break;
+            case StatusType.MP: player.mp += amount; break;
+            case StatusType.STR: player.str += amount; break;
+            case StatusType.DEF: player.def += amount; break;
+            case StatusType.INTEL: player.intel += amount; break;
+            case StatusType.Luk: player.luk += amount; break;
+        }
+
+        UpdateALLStatusUI();
+    }
+
+
+    //各トレーニング実行項目
+    public void OnMagicTrainingClicked()
+    {
+        player.DoTraining(PlayerStatus.TrainingType.Magic);
+    }
+
+    public void OnPowerTrainingClicked()
+    {
+        player.DoTraining(PlayerStatus.TrainingType.Power);
+    }
+
+    public void OnDefenseTrainingClicked()
+    {
+        player.DoTraining(PlayerStatus.TrainingType.Defence);
+    }
+
+    public void finish(int turnsLeft)
+    {
+        // すべて最新のplayerの値で再表示
+        UpdateALLStatusUI();
+        if (turnText != null)
+        {
+            turnText.text = "残りターン: " + turnsLeft.ToString();
+        }
+    }
+
+    //ユーザーに分かりやすくステータス上昇結果を表示する「フィードバックエリア」
+    public TextMeshProUGUI logText; // // ← ステータスログ表示用
+
+    public void ShowLog(string message)
+    {
+        if (logText != null)
+        {
+            logText.text = message;
+        }
     }
 
 }

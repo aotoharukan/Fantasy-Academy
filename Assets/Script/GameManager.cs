@@ -21,13 +21,13 @@ public class GameManager : MonoBehaviour
     void StartTurn()
     {
         Debug.Log($"[ターン開始！] Season {currentSeason}, Turn {currentTurn}");
-        TryRandomEvent("Start");
+        this.TryRandomEvent("Start");
 
-        List<TriningOption> options = TrainingOption.GenerateRandomOptions(5);
-        ui.showTrainingOptions(options, OntrainingSelected);
+        List<TrainingOption> options = TrainingOption.GenerateRandomOptions(5);
+        ui.ShowTrainingOptions(options, OnTrainingSelected);
     }
 
-    public void OntrainingSelected(TrainingOption selected)
+    public void OnTrainingSelected(TrainingOption selected)
     {
         player.ApplyTraining(selected);
 
@@ -56,9 +56,9 @@ public class GameManager : MonoBehaviour
         StartTurn();
     }
 
-    void TryRandomEvent(string phase)
+    public void TryRandomEvent(string phase)
     {
-        float chance = TryRandomEvent.value;
+        float chance = Random.value;
         if (chance < 0.5f)
         {
             string result = player.TryTriggerEvent(phase);
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
 
     void DoBattle(bool isFinal = false)
     {
-        bool won = player.SumulateBattle();
+        bool won = player.SimulateBattle();
         if (!won && isFinal)
         {
             ui.ShowLog("敗北、、、シーズン終了");
@@ -98,8 +98,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            ui.Show("勝利！");
-            player.GainReward();
+            ui.ShowLog("勝利！");
+            player.UpReward();
         }
     }
 

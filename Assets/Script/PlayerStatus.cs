@@ -19,7 +19,7 @@ public class PlayerStatus : MonoBehaviour
 
     public void ApplyTraining(TrainingOption t)
     {
-        level++; // レベルアップ
+        level += t.levelup; // レベルアップ
         mp += t.mpup; // マナアップ
         sta -= t.stacost; // スタミナ消費
         sta += t.staup; // スタミナアップ

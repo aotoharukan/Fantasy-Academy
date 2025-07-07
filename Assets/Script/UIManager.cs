@@ -21,7 +21,12 @@ public class UIManager : MonoBehaviour
         {
             GameObject btn = Instantiate(buttonPrefab, buttonParent);  // ボタン生成
             btn.GetComponentInChildren<TextMeshProUGUI>().text =
-            $"{opt.name}\nSTR+{opt.strup} DEF + {opt.defup} STA - {opt.stacost}";  // 内容表示
+            $"{opt.name}\nHP+{opt.hpup} MP+{opt.mpup} STA+{opt.staup} STR+{opt.strup} DEF+{opt.defup} INT+{opt.intelup} LUk+{opt.lukup} STA-{opt.stacost}";  // 内容表示
+
+            btn.GetComponentInChildren<TextMeshProUGUI>().text =
+            option.kind == OptionKind.Training
+            ? $"{option.displayName}\nSTR+{option.strGain} INT+{option.intelGain} ..." // トレーニングの場合
+            : $"🌟イベント: {option.displayName}"; // イベントの場合
 
             btn.GetComponent<Button>().onClick.AddListener(() => onSelect(opt));  // 押したら選択
         }

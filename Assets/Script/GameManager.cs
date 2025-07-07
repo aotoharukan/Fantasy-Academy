@@ -29,13 +29,41 @@ public class GameManager : MonoBehaviour
 
     public void OnTrainingSelected(TrainingOption selected)
     {
-        player.ApplyTraining(selected);
+        // トレーニングだった場合
+        if (selected.kind == OptionKind.Training)
+        {
+            player.ApplyTraining(selected); // ステータスに反映
+        }
+        // イベントだった場合
+        else if (selected.kind == OptionKind.Event)
+        {
+            ProcessEvent(selected.eventID); // イベントIDに応じた処理を呼ぶ
+        }
 
-        TryRandomEvent("End");
+        TryRandomEvent("End"); // ターン終了時のイベント処理（従来）
+        CheckBattleTrigger();  // バトル発生チェック
+        AdvanceTurn();         // ターンを進める
+    }
 
-        CheckBattleTrigger();
+    // イベントごとの処理をまとめた関数（後で追加・強化可能）
+    void ProcessEvent(string id)
+    {
+        switch (id)
+        {
+            case "EVENT_GOLD":
+                player.money += 100;
+                ui.ShowLog("💰臨時収入！100Gゲット！");
+                break;
 
-        AdvanceTurn();
+            case "EVENT_SKILL":
+                ui.ShowLog("🧠スキル獲得イベント！（仮）");
+                break;
+
+            case "EVENT_REST":
+                player.sta += 20;
+                ui.ShowLog("😴しっかり休憩してスタミナ回復！");
+                break;
+        }
     }
 
     void AdvanceTurn()
